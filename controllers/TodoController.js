@@ -55,6 +55,8 @@ async function getTodo(req, res) {
     data: [],
   };
   const token = req.cookies.token;
+  console.log(token);
+  
   const decoded = await jwt.decode(token, process.env.SECRET);
   const user = await User.findOne({ email: decoded.email });
   const id = user._id;
