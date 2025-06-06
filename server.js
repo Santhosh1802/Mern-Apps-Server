@@ -5,12 +5,9 @@ const todoRoutes = require("./routes/TodoRoutes");
 const { CheckConnection } = require("./utils/conn");
 const cookieParser = require("cookie-parser");
 const app = express();
-const allowedOrigins = [
-  "https://santhoshkmern.netlify.app/",
-];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: "https://santhoshkmern.netlify.app/",
   credentials: true,
 }));
 app.use(express.json());
