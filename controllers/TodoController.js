@@ -8,7 +8,7 @@ async function AddTodo(req, res) {
     error: [],
   };
   const { content } = req.body;
-  const token = req.headers.cookie.split("=")[1];
+  const token = req.cookies.token;
   if (content === "") {
     response.error.push("Content is required");
   } else {
@@ -54,9 +54,7 @@ async function getTodo(req, res) {
   const response = {
     data: [],
   };
-  console.log(req.headers.cookie);
-  
-  const token = req.headers.cookie.split("=")[1];
+  const token = req.cookies.token;
   const decoded = await jwt.decode(token, process.env.SECRET);
   const user = await User.findOne({ email: decoded.email });
   const id = user._id;
