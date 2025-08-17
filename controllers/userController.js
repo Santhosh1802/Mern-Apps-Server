@@ -9,7 +9,14 @@ import {
   RegisterSchema,
 } from "../utils/InputSchema.js";
 import { MyResponse } from "../utils/MyResponse.js";
+import { status } from "../utils/StatusUtil.js";
 
+/**
+ * Handles the user registration by normal method 
+ * @param {name, email, password} req 
+ * @param {response object} res 
+ * @returns 
+ */
 export async function userRegisterController(req, res) {
   const response = new MyResponse();
   const { name, email, password } = req.body;
@@ -20,12 +27,19 @@ export async function userRegisterController(req, res) {
   );
   if (error) {
     response.pushError(error);
+    response.setStatus(status.badrequest);
     return res.json(response);
   }
-  const registerResponse = await RegisterUser(value, response);
+  await RegisterUser(value, response);
   res.json(response);
 }
 
+/**
+ * Handles the user login for normal users
+ * @param {email, password} req 
+ * @param {response object} res 
+ * @returns 
+ */
 export async function userLoginController(req, res) {
   const response = new MyResponse();
   const { email, password } = req.body;
@@ -36,16 +50,26 @@ export async function userLoginController(req, res) {
   );
   if (error) {
     response.pushError(error);
+    response.setStatus(status.badrequest);
     return res.json(response);
   }
-  const loginResponse = await LoginUser(value, response);
+  await LoginUser(value, response);
   res.json(response);
 }
+
+
+/**
+ * Handle user google login
+ * @param {googleDetails object} req 
+ * @param {response object} res 
+ * @returns 
+ */
 export async function userGoogleController(req, res) {
   const response = new MyResponse();
   const { googleDetails } = req.body;
   if(googleDetails.clientId!==`${process.env.GOOGLE_CLIENT_ID}`){
     response.pushError("Invalid Google Client Id");
+    response.setStatus(status.unauthorized);
     return res.json(response);
   }
   const { error, value } = GoogleSchema.validate(
@@ -58,8 +82,9 @@ export async function userGoogleController(req, res) {
   );
   if (error) {
     response.pushError(error);
+    response.setStatus(status.badrequest);
     return res.json(response);
   }
-  const loginResponse = await GoogleLogin(value, response);
+  await GoogleLogin(value, response);
   res.json(response);
 }

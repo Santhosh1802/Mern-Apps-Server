@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import { configDotenv } from "dotenv";
 configDotenv();
+
+//method used to check the mongo db connection
 export async function checkMongoDbConnection() {
   const DB_URL = process.env.DB_URL;
   mongoose
