@@ -2,6 +2,7 @@ import Notes from "../models/notesModel.js";
 import { formatDate, now } from "../utils/dateUtil.js";
 import { status } from "../utils/StatusUtil.js";
 
+//Creates a note for a user
 export async function createOneNote(data, response) {
   const newNote = new Notes({
     title: data.title,
@@ -16,6 +17,7 @@ export async function createOneNote(data, response) {
   response.setStatus(status.created);
   return;
 }
+//edits a note for an user
 export async function editOneNote(data, response) {
   const note = await Notes.findOne({
     _id: data.notes_id,
@@ -34,6 +36,7 @@ export async function editOneNote(data, response) {
   response.setStatus(status.ok);
   return;
 }
+//Get all notes of the user
 export async function getAllNotesOfUser(data, response) {
   const notes = await Notes.find({ created_by: data.user_id });
   if (!notes) {
@@ -46,6 +49,7 @@ export async function getAllNotesOfUser(data, response) {
   response.setStatus(status.ok);
   return;
 }
+//Delete one note of the user
 export async function deleteOneNote(data, response) {
   const note = await Notes.findOne({
     _id: data.notes_id,
@@ -61,6 +65,7 @@ export async function deleteOneNote(data, response) {
   response.setStatus(status.ok);
   return;
 }
+//Archive one note of an user - it toggles the isArchived
 export async function archiveToggleOneNote(data, response) {
   const note = await Notes.findOne({
     _id: data.notes_id,
@@ -81,6 +86,7 @@ export async function archiveToggleOneNote(data, response) {
   response.setStatus(status.ok);
   return;
 }
+//Search for a word in notes of an user and returns matched notes
 export async function searchAllMatchedNote(data, response) {
   const notes = await Notes.find({
   created_by: data.user_id,

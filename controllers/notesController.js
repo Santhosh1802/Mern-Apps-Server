@@ -17,7 +17,7 @@ import { MyResponse } from "../utils/MyResponse.js";
 import { status } from "../utils/StatusUtil.js";
 
 /**
- * Create One Note
+ * Create One Note Controller
  * @param {title, content, user_id} req
  * @param {response object} res
  */
@@ -37,6 +37,12 @@ export async function createOneNoteController(req, res) {
   res.json(response);
 }
 
+/**
+ * Get All Notes of a single user Controller
+ * @param {user_id} req 
+ * @param {response object} res 
+ * @returns 
+ */
 export async function getAllNotesController(req, res) {
   const response = new MyResponse();
   const { user_id } = req.body;
@@ -52,6 +58,13 @@ export async function getAllNotesController(req, res) {
   await getAllNotesOfUser(value, response);
   res.json(response);
 }
+
+/**
+ * Edit one note Controller
+ * @param {title,content,user_id,notes_id} req 
+ * @param {response object} res 
+ * @returns 
+ */
 export async function editOneNoteController(req, res) {
   const response = new MyResponse();
   const { title, content, user_id, notes_id } = req.body;
@@ -67,6 +80,12 @@ export async function editOneNoteController(req, res) {
   await editOneNote(value, response);
   res.json(response);
 }
+/**
+ * Delete one note Controller
+ * @param {notes_id,user_id} req 
+ * @param {response object} res 
+ * @returns 
+ */
 export async function deleteOneNoteController(req, res) {
   const response = new MyResponse();
   const { notes_id, user_id } = req.body;
@@ -82,7 +101,12 @@ export async function deleteOneNoteController(req, res) {
   await deleteOneNote(value, response);
   res.json(response);
 }
-
+/**
+ * Archive Toggle for Note Controller
+ * @param {notes_id,user_id} req 
+ * @param {response object} res 
+ * @returns 
+ */
 export async function archiveToggleOneNoteController(req, res) {
   const response = new MyResponse();
   const { notes_id, user_id } = req.body;
@@ -98,7 +122,12 @@ export async function archiveToggleOneNoteController(req, res) {
   await archiveToggleOneNote(value, response);
   res.json(response);
 }
-
+/**
+ * Search a word from all note Controller
+ * @param {user_id,word} req 
+ * @param {response object} res 
+ * @returns 
+ */
 export async function searchFromAllNoteController(req, res) {
   const response = new MyResponse();
   const { user_id, word } = req.body;

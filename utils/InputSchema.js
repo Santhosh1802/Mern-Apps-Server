@@ -44,10 +44,12 @@ export const NotesSchema = Joi.object({
   user_id: userIdSchema,
 });
 
+//used to validate user_id for getting related notes of an user
 export const NotesGetSchema = Joi.object({
   user_id: userIdSchema,
 });
 
+//used to validate the edit of a note
 export const NotesEditSchema = Joi.object({
   title: notesTitleSchema,
   content: contentSchema,
@@ -55,11 +57,13 @@ export const NotesEditSchema = Joi.object({
   notes_id: notesIdSchema,
 });
 
+//used to validate the delete of a note
 export const NotesDeleteSchema = Joi.object({
   notes_id: notesIdSchema,
   user_id: userIdSchema,
 });
 
+//used to validate the search of the notes
 export const NotesSearchSchema = Joi.object({
   user_id:userIdSchema,
   word: searchSchema,
