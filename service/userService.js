@@ -26,7 +26,7 @@ export async function RegisterUser(data, response) {
     await newUser.save();//new user creation
     response.setStatus(status.created);
     response.setMessage("User Created Successfully");
-    response.setData({ accessToken: await createAccessToken(newUser) });
+    response.setData({ accessToken: await createAccessToken(newUser),name:newUser.name });
     return;
   }
 }
@@ -40,6 +40,11 @@ export async function LoginUser(data, response) {
     response.setStatus(status.unauthorized);
     return;
   } else {
+    if(user.password===null || user.password===undefined){
+      response.pushError("User is Google User");
+      response.setStatus(status.conflict);
+      return;
+    }
     const passwordMatched = await bcrypt.compare(data.password, user.password);//password comparing phase using bcrypt-js
     if (!passwordMatched) {
       //push error if password does not match
@@ -50,7 +55,7 @@ export async function LoginUser(data, response) {
       //if password and email exist and are correct login success
       response.setMessage("Login Successful");
       response.setStatus(status.ok);
-      response.setData({ accessToken: await createAccessToken(user) });
+      response.setData({ accessToken: await createAccessToken(user),name:user.name });
       return;
     }
   }
@@ -69,6 +74,6 @@ export async function GoogleLogin(data, response) {
   //if all process are right google login is Success
   response.setMessage("Google Login Success");
   response.setStatus(status.ok);
-  response.setData({ accessToken: await createAccessToken(user) });
+  response.setData({ accessToken: await createAccessToken(user) ,name:user.name});
   return;
 }

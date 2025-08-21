@@ -3,7 +3,7 @@ import Joi from "joi";
 //these schema are used by the objects in the exportable schema
 const EmailSchema = Joi.string().email().required().label("Email");
 const NameSchema = Joi.string().min(3).max(14).required().label("Name");
-const PasswordSchema = Joi.string().min(6).max(14).required().label("Password");
+const PasswordSchema = Joi.string().required().label("Password");
 const ClientIdSchema = Joi.string().label("ClientId");
 const CredentialSchema = Joi.string().label("Credential");
 const selectedBySchema = Joi.string().label("Selected_By");
